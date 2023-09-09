@@ -1,10 +1,8 @@
 <script setup>
-import { computed, ref, getCurrentInstance } from 'vue'
+import { computed, ref } from 'vue'
 import { api } from 'boot/axios'
 import { useQuasar } from 'quasar'
 
-const { appContext } = getCurrentInstance()
-const { $appConfig } = appContext.config.globalProperties
 const $q = useQuasar()
 
 const signaturePad = ref(null)
@@ -34,6 +32,7 @@ async function save () {
     $q.notify({
       color: 'negative',
       position: 'top',
+      icon: 'announcement',
       message: 'Fill out signature in the box'
     })
     return
@@ -42,6 +41,7 @@ async function save () {
   if (!fullName.value) {
     $q.notify({
       color: 'negative',
+      icon: 'announcement',
       position: 'top',
       message: 'Fill out the full name'
     })
@@ -51,7 +51,7 @@ async function save () {
   signatureString.value = data
 
   try {
-    const { data: result } = await api.post('/client', {
+    const { data: requestResult } = await api.post('/client', {
       name: fullName.value,
       address: '',
       phone: '',
@@ -59,13 +59,35 @@ async function save () {
       file: signatureString.value
     })
 
-    console.log({ result })
+    console.log({ requestResult })
+    if (requestResult.result.code === 200) {
+      $q.notify({
+        color: 'green',
+        position: 'top-right',
+        icon: 'check_circle',
+        message: 'Signature saved'
+      })
+      clearDataAndResetApp()
+    }
   } catch (e) {
-    console.log(e)
+    console.error(e.response.data.result.message)
+    $q.notify({
+      color: 'negative',
+      icon: 'warning',
+      position: 'top-right',
+      message: e.response.data.result.message
+    })
   }
 }
 
-console.log({ $appConfig })
+function clearDataAndResetApp () {
+  signaturePad.value.clearSignature()
+  fullName.value = null
+  signatureString.value = null
+  imgs.value = []
+  hex.value = '#000'
+}
+
 </script>
 
 <template>
