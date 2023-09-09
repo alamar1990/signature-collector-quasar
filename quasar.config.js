@@ -28,7 +28,7 @@ module.exports = configure(function (/* ctx */) {
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli/boot-files
     boot: [
-
+      'appConfig',
       'axios',
       'signaturepad'
     ],
@@ -57,6 +57,10 @@ module.exports = configure(function (/* ctx */) {
       target: {
         browser: ['es2019', 'edge88', 'firefox78', 'chrome87', 'safari13.1'],
         node: 'node16'
+      },
+      env: {
+        ...require('dotenv').config().parsed,
+        VUE_APP_API_BASE_URL: process.env.VUE_APP_API_BASE_URL
       },
 
       vueRouterMode: 'history' // available values: 'hash', 'history'

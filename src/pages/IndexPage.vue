@@ -1,5 +1,8 @@
 <script setup>
-import { computed, ref } from 'vue'
+import { computed, ref, getCurrentInstance } from 'vue'
+import { api } from 'boot/axios'
+const { appContext } = getCurrentInstance()
+const { $appConfig } = appContext.config.globalProperties
 
 const signaturePad = ref(null)
 
@@ -20,7 +23,20 @@ async function save () {
   const { isEmpty, data } = signaturePad.value.saveSignature()
   console.log(isEmpty)
   console.log(data)
+
+  const { data: result } = await api.post('/client', {
+    name: 'Pepin',
+    address: '',
+    phone: '55555555',
+    s_ssn: '555557779990',
+    file: 'base64:file////'
+  })
+
+  console.log({ result })
 }
+
+console.log({ $appConfig })
+console.log({ app: appContext.config.globalProperties })
 </script>
 
 <template>
