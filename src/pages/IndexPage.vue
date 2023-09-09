@@ -1,13 +1,19 @@
 <script setup>
 import { computed, ref, getCurrentInstance } from 'vue'
 import { api } from 'boot/axios'
+import { useQuasar } from 'quasar'
+
 const { appContext } = getCurrentInstance()
 const { $appConfig } = appContext.config.globalProperties
+const $q = useQuasar()
 
 const signaturePad = ref(null)
 
 const imgs = ref([])
 const hex = ref('#000')
+
+const fullName = ref(null)
+const signatureString = ref(null)
 
 const options = computed(() => {
   return {
@@ -21,22 +27,45 @@ const undo = () => {
 
 async function save () {
   const { isEmpty, data } = signaturePad.value.saveSignature()
+
   console.log(isEmpty)
-  console.log(data)
 
-  const { data: result } = await api.post('/client', {
-    name: 'Pepin',
-    address: '',
-    phone: '55555555',
-    s_ssn: '555557779990',
-    file: 'base64:file////'
-  })
+  if (isEmpty) {
+    $q.notify({
+      color: 'negative',
+      position: 'top',
+      message: 'Fill out signature in the box'
+    })
+    return
+  }
 
-  console.log({ result })
+  if (!fullName.value) {
+    $q.notify({
+      color: 'negative',
+      position: 'top',
+      message: 'Fill out the full name'
+    })
+    return
+  }
+
+  signatureString.value = data
+
+  try {
+    const { data: result } = await api.post('/client', {
+      name: fullName.value,
+      address: '',
+      phone: '',
+      s_ssn: '',
+      file: signatureString.value
+    })
+
+    console.log({ result })
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 console.log({ $appConfig })
-console.log({ app: appContext.config.globalProperties })
 </script>
 
 <template>
@@ -50,6 +79,7 @@ console.log({ app: appContext.config.globalProperties })
             <q-separator />
             <div class="col">
               <q-input
+                v-model="fullName"
                 filled
                 clearable
                 label="Full name *"
