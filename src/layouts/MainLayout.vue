@@ -17,7 +17,34 @@
           v-ripple
           class="text-white"
         >
+          <q-item-section avatar>
+            <q-icon
+              name="login"
+              class="text-white  rotate-180"
+            />
+          </q-item-section>
 
+          <q-item-section>
+            {{ authUserName }}
+          </q-item-section>
+          <q-menu auto-close>
+            <q-list style="min-width: 100px">
+              <q-item
+                clickable
+                v-if="isAuthenticated"
+                @click="doLogout"
+              >
+                <q-item-section>Logout</q-item-section>
+              </q-item>
+              <q-item
+                clickable
+                v-else
+                to="/login"
+              >
+                <q-item-section>Login</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
         </q-item>
       </q-toolbar>
     </q-header>
@@ -29,20 +56,36 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-// import { symOutlinedSignature } from '@quasar/extras/material-symbols-outlined'
+import { computed, defineComponent, ref } from 'vue'
+import { useAuthStore } from 'stores/auth'
+import { storeToRefs } from 'pinia'
 export default defineComponent({
   name: 'MainLayout',
 
   components: {
   },
   methods: {
-
+    doLogout () {
+      this.authStore.doLogout()
+      this.$router.push('/login')
+    }
   },
 
   setup () {
-    return {
+    const authStore = useAuthStore()
+    const { isAuthenticated, getUser } = storeToRefs(authStore)
+    const authUserName = computed(() => getUser?.name)
 
+    const leftDrawerOpen = ref(false)
+
+    return {
+      authStore,
+      authUserName,
+      isAuthenticated,
+      leftDrawerOpen,
+      toggleLeftDrawer () {
+        leftDrawerOpen.value = !leftDrawerOpen.value
+      }
     }
   }
 })
