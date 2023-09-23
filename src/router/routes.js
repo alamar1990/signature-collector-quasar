@@ -28,6 +28,9 @@ export const ROUTES = {
   Profile: {
     staticPath: '/profile'
   },
+  Sign: {
+    staticPath: '/sign'
+  },
   Login: {
     staticPath: '/login'
   },
@@ -45,6 +48,10 @@ const routes = [
       beforeEnter: isAuthenticated,
       path: '',
       component: () => import('pages/IndexPage.vue')
+    },
+    {
+      path: ROUTES.Sign.staticPath + '/:public_link',
+      component: () => import('pages/Sign.vue')
     },
     {
       beforeEnter: isAuthenticated,

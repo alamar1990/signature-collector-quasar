@@ -25,10 +25,16 @@
           </q-item-section>
 
           <q-item-section>
-            {{ getUser?.name }}
+            {{ getUser?.email }}
           </q-item-section>
           <q-menu auto-close>
             <q-list style="min-width: 100px">
+              <q-item
+                clickable
+                to="/profile"
+              >
+                <q-item-section>Profile</q-item-section>
+              </q-item>
               <q-item
                 clickable
                 v-if="isAuthenticated"

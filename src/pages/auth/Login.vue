@@ -45,6 +45,7 @@
 <script>
 import { ref } from 'vue'
 import { useAuthStore } from 'stores/auth'
+import { ROUTES } from 'src/router/routes'
 
 export default {
   setup () {
@@ -85,7 +86,7 @@ export default {
         await this.authStore.doLogin({
           email: this.email, password: this.password
         })
-        const toPath = this.$route.query.to || '/'
+        const toPath = this.$route.query.to || ROUTES.Profile.staticPath
         this.$router.push(toPath)
       } catch (err) {
         console.log(err)
