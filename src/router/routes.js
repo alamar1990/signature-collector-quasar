@@ -18,9 +18,25 @@ function isAuthenticated (to, from, next) {
   next()
 }
 
+export const ROUTES = {
+  Main: {
+    staticPath: '/'
+  },
+  Auth: {
+    staticPath: '/auth'
+  },
+  Login: {
+    staticPath: '/login'
+  },
+  Logout: {
+    staticPath: '/logout'
+  }
+
+}
+
 const routes = [
   {
-    path: '/',
+    path: ROUTES.Main.staticPath,
     component: () => import('layouts/MainLayout.vue'),
     children: [{
       beforeEnter: isAuthenticated,
@@ -31,7 +47,7 @@ const routes = [
   },
   {
     name: 'Login',
-    path: '/login',
+    path: ROUTES.Login.staticPath,
     component: () => import('layouts/AuthLayout.vue'),
     children: [{
       path: '',

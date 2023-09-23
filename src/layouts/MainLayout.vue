@@ -25,7 +25,7 @@
           </q-item-section>
 
           <q-item-section>
-            {{ authUserName }}
+            {{ getUser?.name }}
           </q-item-section>
           <q-menu auto-close>
             <q-list style="min-width: 100px">
@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, ref } from 'vue'
+import { defineComponent, ref } from 'vue'
 import { useAuthStore } from 'stores/auth'
 import { storeToRefs } from 'pinia'
 export default defineComponent({
@@ -74,13 +74,12 @@ export default defineComponent({
   setup () {
     const authStore = useAuthStore()
     const { isAuthenticated, getUser } = storeToRefs(authStore)
-    const authUserName = computed(() => getUser?.name)
 
     const leftDrawerOpen = ref(false)
 
     return {
       authStore,
-      authUserName,
+      getUser,
       isAuthenticated,
       leftDrawerOpen,
       toggleLeftDrawer () {
