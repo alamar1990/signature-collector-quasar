@@ -25,6 +25,9 @@ export const ROUTES = {
   Auth: {
     staticPath: '/auth'
   },
+  Profile: {
+    staticPath: '/profile'
+  },
   Login: {
     staticPath: '/login'
   },
@@ -42,6 +45,11 @@ const routes = [
       beforeEnter: isAuthenticated,
       path: '',
       component: () => import('pages/IndexPage.vue')
+    },
+    {
+      beforeEnter: isAuthenticated,
+      path: ROUTES.Profile.staticPath,
+      component: () => import('pages/auth/Profile.vue')
     }
     ]
   },

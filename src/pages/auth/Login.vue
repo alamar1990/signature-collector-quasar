@@ -5,10 +5,9 @@
     <div class="column q-pa-lg">
       <div class="row q-py-md justify-center">
         <q-img
-          class="self-center"
-          src="~assets/logo.jpg"
-          spinner-color="white"
-          style="height: 140px; max-width: 150px"
+          src="~assets/signature_icon.svg"
+          spinner-color="black"
+          style="height: 100px; max-width: 100px; background: #002865; border-radius: 50%"
         />
       </div>
       <div class="row items-center">
