@@ -5,10 +5,9 @@ import { useQuasar } from 'quasar'
 import { useRoute } from 'vue-router'
 
 const $q = useQuasar()
-const { params } = useRoute()
+const route = useRoute()
 
 const signaturePad = ref(null)
-const isValidLink = ref(false)
 const imgs = ref([])
 const hex = ref('#000')
 const fullName = ref(null)
@@ -20,18 +19,7 @@ const options = computed(() => {
 })
 
 onMounted(async () => {
-  try {
-    const { data: result } = await api.post('/user/valid-link', {
-      link: params.public_link
-    })
 
-    isValidLink.value = result.valid
-    console.log({ result: isValidLink.value })
-  } catch (e) {
-    console.error(e)
-  }
-
-  console.log({ params })
 })
 
 const undo = () => {
@@ -68,9 +56,7 @@ async function save () {
   try {
     const { data: requestResult } = await api.post('/client', {
       name: fullName.value,
-      address: '',
-      phone: '',
-      s_ssn: '',
+      public_link: route.params.public_link,
       file: signatureString.value
     })
 

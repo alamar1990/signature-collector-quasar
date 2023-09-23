@@ -1,4 +1,8 @@
 import { getRefreshTokenFromLocalstorage, getTokenFromLocalstorage, isValidToken } from 'src/utils/auth'
+import { api } from 'boot/axios'
+import { useRouter } from 'vue-router'
+import { useQuasar } from 'quasar'
+import { useAuthStore } from 'stores/auth'
 
 function isAuthenticated (to, from, next) {
   const accesToken = getTokenFromLocalstorage()
@@ -15,6 +19,36 @@ function isAuthenticated (to, from, next) {
     next()
     return
   }
+  next()
+}
+
+async function isValidLink (to, from, next) {
+  const authStore = useAuthStore()
+  const router = useRouter()
+  const $q = useQuasar()
+
+  authStore.doLogout()
+
+  try {
+    const { data: result } = await api.post('/user/valid-link', {
+      link: to.params.public_link
+    })
+
+    console.log({ result: result.valid })
+    if (!result.valid) {
+      router.push('/')
+      $q.notify({
+        color: 'negative',
+        icon: 'warning',
+        position: 'top',
+        message: 'Link not valid'
+      })
+      return
+    }
+  } catch (e) {
+    console.error(e)
+  }
+
   next()
 }
 
@@ -50,6 +84,7 @@ const routes = [
       component: () => import('pages/IndexPage.vue')
     },
     {
+      beforeEnter: isValidLink,
       path: ROUTES.Sign.staticPath + '/:public_link',
       component: () => import('pages/Sign.vue')
     },
