@@ -30,6 +30,7 @@
           <q-menu auto-close>
             <q-list style="min-width: 100px">
               <q-item
+                v-if="isAuthenticated"
                 clickable
                 to="/profile"
               >
