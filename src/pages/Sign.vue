@@ -95,9 +95,19 @@ function clearDataAndResetApp () {
   <q-page class="flex flex-center">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-6">
       <div class="q-gutter-md">
+        <div class="column justify-center content-center items-center">
+          <p style="font-size: 1.8rem"> Signature collector </p>
+
+          <q-img
+            src="~assets/signature_icon.svg"
+            spinner-color="black"
+            style="height: 100px; max-width: 100px; background: #002865; border-radius: 10%"
+          />
+        </div>
         <div class="row" style="max-width: 550px">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-8 col-xl-6 q-gutter-sm q-py-md q-pl-md">
-            <p> Important Notice: Your signature is a unique and personal identifier. By using our signature collection app, you acknowledge that you are sharing your signature at your own risk. Please exercise caution and discretion when sharing your signature electronically. We take every measure to protect your data, but it is essential to be aware of potential risks associated with digital signature sharing. Thank you for understanding and using our app responsibly.</p>
+            <p> Important Notice: Your signature is a unique and personal identifier. By using our signature collection app, you acknowledge that you are sharing your signature at your own risk. Please exercise caution and discretion when sharing your signature electronically. We take every measure to protect your data, but it is essential to be aware of potential risks associated with digital signature sharing.</p>
+            <p> Thank you for understanding and using our app responsibly.</p>
             <q-separator />
             <div class="col">
               <q-input

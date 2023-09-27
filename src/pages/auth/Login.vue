@@ -7,7 +7,7 @@
         <q-img
           src="~assets/signature_icon.svg"
           spinner-color="black"
-          style="height: 100px; max-width: 100px; background: #002865; border-radius: 50%"
+          style="height: 100px; max-width: 100px; background: #002865; border-radius: 10%"
         />
       </div>
       <div class="row items-center">

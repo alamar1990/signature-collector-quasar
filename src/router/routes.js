@@ -43,6 +43,7 @@ async function isValidLink (to, from, next) {
         position: 'top',
         message: 'Link not valid'
       })
+      next()
       return
     }
   } catch (e) {
@@ -75,20 +76,27 @@ export const ROUTES = {
 }
 
 const routes = [
+
   {
-    path: ROUTES.Main.staticPath,
+    name: 'Profile',
+    path: ROUTES.Profile.staticPath,
     component: () => import('layouts/MainLayout.vue'),
+    children: [
+      {
+        beforeEnter: isAuthenticated,
+        path: '',
+        component: () => import('pages/auth/Profile.vue')
+      }
+    ]
+  },
+  {
+    name: 'Main',
+    path: ROUTES.Main.staticPath,
+    component: () => import('layouts/SignLayout.vue'),
     children: [{
-      beforeEnter: isAuthenticated,
       path: '',
       component: () => import('pages/IndexPage.vue')
-    },
-    {
-      beforeEnter: isAuthenticated,
-      path: ROUTES.Profile.staticPath,
-      component: () => import('pages/auth/Profile.vue')
-    }
-    ]
+    }]
   },
   {
     name: 'Sign',
