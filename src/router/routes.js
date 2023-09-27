@@ -5,17 +5,17 @@ import { useQuasar } from 'quasar'
 import { useAuthStore } from 'stores/auth'
 
 function isAuthenticated (to, from, next) {
-  const accesToken = getTokenFromLocalstorage()
+  const accessToken = getTokenFromLocalstorage()
   const refreshToken = getRefreshTokenFromLocalstorage()
-  if (!accesToken || !refreshToken) {
+  if (!accessToken || !refreshToken) {
     next('/login')
     return
   }
-  if (!isValidToken(accesToken)) {
+  if (!isValidToken(accessToken)) {
     next('/login')
     return
   }
-  if (accesToken) {
+  if (accessToken) {
     next()
     return
   }
@@ -84,16 +84,21 @@ const routes = [
       component: () => import('pages/IndexPage.vue')
     },
     {
-      beforeEnter: isValidLink,
-      path: ROUTES.Sign.staticPath + '/:public_link',
-      component: () => import('pages/Sign.vue')
-    },
-    {
       beforeEnter: isAuthenticated,
       path: ROUTES.Profile.staticPath,
       component: () => import('pages/auth/Profile.vue')
     }
     ]
+  },
+  {
+    name: 'Sign',
+    path: ROUTES.Sign.staticPath + '/:public_link',
+    component: () => import('layouts/SignLayout.vue'),
+    children: [{
+      beforeEnter: isValidLink,
+      path: '',
+      component: () => import('pages/Sign.vue')
+    }]
   },
   {
     name: 'Login',
