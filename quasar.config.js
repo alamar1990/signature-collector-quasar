@@ -30,7 +30,8 @@ module.exports = configure(function (/* ctx */) {
     boot: [
       'appConfig',
       'axios',
-      'signaturepad'
+      'signaturepad',
+      'clipboard'
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#css

@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@quasar/extras": "^1.16.4",
+    "@soerenmartius/vue3-clipboard": "^0.1.2",
     "axios": "^1.2.1",
     "dotenv": "^16.3.1",
     "pinia": "^2.0.11",
