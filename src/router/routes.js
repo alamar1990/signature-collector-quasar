@@ -69,6 +69,9 @@ export const ROUTES = {
   Login: {
     staticPath: '/login'
   },
+  Register: {
+    staticPath: '/register'
+  },
   Logout: {
     staticPath: '/logout'
   }
@@ -109,13 +112,17 @@ const routes = [
     }]
   },
   {
-    name: 'Login',
-    path: ROUTES.Login.staticPath,
+    name: 'Auth',
     component: () => import('layouts/AuthLayout.vue'),
     children: [{
-      path: '',
+      path: ROUTES.Login.staticPath,
       component: () => import('pages/auth/Login.vue')
-    }]
+    },
+    {
+      path: ROUTES.Register.staticPath,
+      component: () => import('pages/auth/Register.vue')
+    }
+    ]
   },
 
   // Always leave this as last one,

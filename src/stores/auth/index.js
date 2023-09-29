@@ -30,6 +30,20 @@ export const useAuthStore = defineStore('auth', {
         throw e
       }
     },
+    async doRegister ({ email, password, name, role = 'client' }) {
+      // eslint-disable-next-line no-useless-catch
+      try {
+        const { data } = await api.post('/user', {
+          email,
+          password,
+          name,
+          role
+        })
+        return { emailCreated: data?.result?.email }
+      } catch (e) {
+        throw e
+      }
+    },
     doLogout () {
       this.removeToken()
       window.localStorage.removeItem('access_token')
