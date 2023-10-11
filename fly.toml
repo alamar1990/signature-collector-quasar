@@ -1,9 +1,9 @@
-# fly.toml app configuration file generated for signature-collector on 2023-09-10T00:11:19-04:00
+# fly.toml app configuration file generated for signatures-collector on 2023-10-10T20:36:19-04:00
 #
 # See https://fly.io/docs/reference/configuration/ for information about how to use this file.
 #
 
-app = "signature-collector"
+app = "signatures-collector"
 primary_region = "mia"
 kill_signal = "SIGINT"
 kill_timeout = "5s"
@@ -21,7 +21,6 @@ kill_timeout = "5s"
   [[services.ports]]
     port = 80
     handlers = ["http"]
-    force_https = true
 
   [[services.ports]]
     port = 443
