@@ -61,7 +61,7 @@ async function save () {
     })
 
     console.log({ requestResult })
-    if (requestResult.result.code === 200) {
+    if (requestResult.result.success) {
       $q.notify({
         color: 'green',
         position: 'top-right',

@@ -74,36 +74,24 @@ async function updatePublicLink () {
             <div class="self-center text-blue-8">{{ getUser.name || 'No name'  }}</div>
             <div class="self-center q-ml-md">{{ `Here you can update your public link`  }}</div>
 
-            <div class="col">
-              <q-input
-                filled
-                clearable
-                :disable="isRefreshingPublicLink"
-                :loading="isRefreshingPublicLink"
-                label="Public link *"
-                v-model="generatedLink"
-                readonly
-              >
-                <template #after>
-                  <q-btn round dense flat icon="content_copy"
-                         :disable="isRefreshingPublicLink"
-                         v-clipboard:copy="fullPastableLink"
-                         v-clipboard:success="onCopyToClipboardSuccess"
-                         v-clipboard:error="onCopyToClipboardError"
-                  />
-                </template>
-                <template #append>
-                  <q-btn round dense flat icon="refresh"
-                         :disable="isRefreshingPublicLink"
-                         @click.stop.prevent="updatePublicLink"
-                         class="cursor-pointer" />
-                </template>
-              </q-input>
+            <div class="flex row self-center content-center items-center">
+              <div>
+                <div class="self-center text-amber-8">{{ fullPastableLink  }}</div>
+              </div>
+              <div class="self-center items-center content-center">
+                <q-btn round dense flat icon="content_copy"
+                       :disable="isRefreshingPublicLink"
+                       v-clipboard:copy="fullPastableLink"
+                       v-clipboard:success="onCopyToClipboardSuccess"
+                       v-clipboard:error="onCopyToClipboardError"
+                />
+                <q-btn round dense flat icon="refresh"
+                       :disable="isRefreshingPublicLink"
+                       @click.stop.prevent="updatePublicLink"
+                       class="cursor-pointer" />
+              </div>
             </div>
 
-            <div class="row">
-              <div class="col q-gutter-y-sm q-pb-sm q-pr-sm">
-            </div>
 <!--            <div class="full-width row wrap justify-around items-start content-start">-->
 <!--              <q-btn-->
 <!--                icon="check"-->
@@ -112,7 +100,7 @@ async function updatePublicLink () {
 <!--                color="primary"-->
 <!--              />-->
 <!--            </div>-->
-          </div>
+
         </div>
 
       </div>
